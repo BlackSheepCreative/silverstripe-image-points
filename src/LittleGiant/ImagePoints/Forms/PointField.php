@@ -2,6 +2,8 @@
 
 namespace LittleGiant\SilverStripeImagePoints\Forms;
 
+use SilverStripe\Forms\Form;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use Psr\Log\InvalidArgumentException;
 use SilverStripe\Forms\FormField;
 use SilverStripe\Forms\HiddenField;
@@ -41,7 +43,6 @@ class PointField extends FormField
     /**
      * HotSpotPointField constructor.
      * @param $name
-     * @param null $title
      * @param string $value
      * @param string $image
      * @param int $width
@@ -63,7 +64,7 @@ class PointField extends FormField
     }
 
     /**
-     * @param \SilverStripe\Forms\Form $form
+     * @param Form $form
      * @return $this
      */
     public function setForm($form)
@@ -79,17 +80,17 @@ class PointField extends FormField
     /**
      * @return mixed|string
      */
-    public function Value()
+    public function Value(): string
     {
         $xPos = $this->xPosField->Value();
         $yPos = $this->yPosField->Value();
 
-        return "$xPos,$yPos";
+        return sprintf('%s,%s', $xPos, $yPos);
     }
 
     /**
      * @param array $properties
-     * @return \SilverStripe\ORM\FieldType\DBHTMLText
+     * @return DBHTMLText
      */
     public function FieldHolder($properties = [])
     {
@@ -99,15 +100,12 @@ class PointField extends FormField
     /**
      * @desc Add required css/javascript.
      */
-    public function initFrontEndRequirements()
+    public function initFrontEndRequirements(): void
     {
-        Requirements::css('littlegiant/silverstripe-image-points:client/css/image-points.css');
-        Requirements::javascript('littlegiant/silverstripe-image-points:client/javascript/image-points.js');
+        Requirements::css('blacksheepcreative/silverstripe-image-points:client/css/image-points.css');
+        Requirements::javascript('blacksheepcreative/silverstripe-image-points:client/javascript/image-points.js');
     }
 
-    /**
-     * @return string
-     */
     private function getImageAspectRatio(): string
     {
         return (($this->height / $this->width) * 100) . '%';
@@ -115,7 +113,7 @@ class PointField extends FormField
 
     /**
      * @param array $properties
-     * @return \SilverStripe\ORM\FieldType\DBHTMLText|string
+     * @return DBHTMLText|string
      */
     public function Field($properties = [])
     {
@@ -123,16 +121,15 @@ class PointField extends FormField
             $this->xPosField->FieldHolder() .
             $this->yPosField->FieldHolder() .
             "<div class='l-hot-spot'>" .
-            "<div class='l-hot-spot__item js-hot-spot' style='width:{$this->width}px; background-image: url($this->image);'>" .
-            "<div class='l-hot-spot__padding' style='width:100%; padding-top: {$this->getImageAspectRatio()}'></div>" .
-            "<span class='c-hot-spot-point js-hot-spot-point' style='left: {$this->xPosField->Value()}%; top: {$this->yPosField->Value()}%;'></span>" .
+            sprintf("<div class='l-hot-spot__item js-hot-spot' style='width:%dpx; background-image: url(%s);'>", $this->width, $this->image) .
+            sprintf("<div class='l-hot-spot__padding' style='width:100%%; padding-top: %s'></div>", $this->getImageAspectRatio()) .
+            sprintf("<span class='c-hot-spot-point js-hot-spot-point' style='left: %s%%; top: %s%%;'></span>", $this->xPosField->Value(), $this->yPosField->Value()) .
             "</div>" .
             "</div>";
     }
 
     /**
      * @param mixed $value
-     * @param null $data
      * @return $this
      */
     public function setValue($value, $data = NULL)
@@ -152,35 +149,29 @@ class PointField extends FormField
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getXPos(): float
     {
         if (is_array($this->value)) {
             return $this->value['xPos'];
-        } else {
-            $values = explode(",", $this->value);
-            if (count($values) > 1) {
-                return $values[0];
-            }
+        }
+
+        $values = explode(",", $this->value);
+        if (count($values) > 1) {
+            return $values[0];
         }
 
         return 0;
     }
 
-    /**
-     * @return int
-     */
     public function getYPos(): float
     {
         if (is_array($this->value)) {
             return $this->value['xPos'];
-        } else {
-            $values = explode(",", $this->value);
-            if (count($values) > 1) {
-                return $values[1];
-            }
+        }
+
+        $values = explode(",", $this->value);
+        if (count($values) > 1) {
+            return $values[1];
         }
 
         return 0;
@@ -188,7 +179,6 @@ class PointField extends FormField
 
     /**
      * @param $field
-     * @return FormField
      */
     public function setXPosField($field): FormField
     {
@@ -206,9 +196,6 @@ class PointField extends FormField
         $this->setValue($this->value); // update value
     }
 
-    /**
-     * @return FormField
-     */
     public function getXPosField(): FormField
     {
         return $this->xPosField;
@@ -217,7 +204,7 @@ class PointField extends FormField
     /**
      * @param FormField
      */
-    public function setYPosField($field)
+    public function setYPosField($field): void
     {
         $expected = $this->getName() . '[yPos]';
         if ($field->getName() != $expected) {

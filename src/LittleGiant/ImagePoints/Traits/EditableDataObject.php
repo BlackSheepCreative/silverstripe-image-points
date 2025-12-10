@@ -1,6 +1,7 @@
 <?php
 
 namespace LittleGiant\SilverStripeImagePoints\Forms;
+use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
 
 /**
@@ -12,8 +13,7 @@ trait EditableDataObject
 {
     /**
      * @see \SilverStripe\ORM\DataObject::canView()
-     * @param null|\SilverStripe\Security\Member $member
-     * @return bool
+     * @param null|Member $member
      */
     public function canView($member = null): bool
     {
@@ -22,8 +22,7 @@ trait EditableDataObject
 
     /**
      * @see \SilverStripe\ORM\DataObject::canEdit()
-     * @param null|\SilverStripe\Security\Member $member
-     * @return bool
+     * @param null|Member $member
      */
     public function canEdit($member = null): bool
     {
@@ -32,8 +31,7 @@ trait EditableDataObject
 
     /**
      * @see \SilverStripe\ORM\DataObject::canDelete()
-     * @param null|\SilverStripe\Security\Member $member
-     * @return bool
+     * @param null|Member $member
      */
     public function canDelete($member = null): bool
     {
@@ -42,9 +40,8 @@ trait EditableDataObject
 
     /**
      * @see \SilverStripe\ORM\DataObject::canCreate()
-     * @param null|\SilverStripe\Security\Member $member
+     * @param null|Member $member
      * @param array $context
-     * @return bool
      */
     public function canCreate($member = null, $context = []): bool
     {

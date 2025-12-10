@@ -2,6 +2,15 @@
 
 Image points is a module that allows you to add "points" on an image that allows you to loop through items with `x` and `y` coordinates for positioning.
 
+## Version Compatibility
+
+- **1.x**: SilverStripe 6.x (current branch)
+
+## Requirements
+
+- PHP 8.3 or higher
+- SilverStripe CMS 6.0 or higher
+
 ## Screenshot
 
 ![Screenshot](https://github.com/littlegiant/silverstripe-image-points/blob/master/screenshot.png)

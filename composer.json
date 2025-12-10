@@ -1,5 +1,5 @@
 {
-    "name": "littlegiant/silverstripe-image-points",
+    "name": "blacksheepcreative/silverstripe-image-points",
     "description": "Plot points on an image.",
     "type": "silverstripe-vendormodule",
     "keywords": [
@@ -15,11 +15,11 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/littlegiant/silverstripe-image-points/issues"
+        "issues": "https://github.com/blacksheepcreative/silverstripe-image-points/issues"
     },
     "require": {
-        "silverstripe/cms": "^4",
-        "silverstripe/framework": "^4"
+        "silverstripe/cms": "^6",
+        "silverstripe/framework": "^6"
     },
     "autoload": {
         "psr-4": {
@@ -31,5 +31,16 @@
         "expose": [
             "client"
         ]
+    },
+    "require-dev": {
+        "rector/rector": "^2.2",
+        "phpstan/phpstan": "^2.1",
+        "wernerkrauss/silverstripe-rector": "^1.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "silverstripe/vendor-plugin": true
+        }
     }
 }
