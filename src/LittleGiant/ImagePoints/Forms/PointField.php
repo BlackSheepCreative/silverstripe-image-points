@@ -123,7 +123,7 @@ class PointField extends FormField
             "<div class='l-hot-spot'>" .
             sprintf("<div class='l-hot-spot__item js-hot-spot' style='width:%dpx; background-image: url(%s);'>", $this->width, $this->image) .
             sprintf("<div class='l-hot-spot__padding' style='width:100%%; padding-top: %s'></div>", $this->getImageAspectRatio()) .
-            sprintf("<span class='c-hot-spot-point js-hot-spot-point' style='left: %s%%; top: %s%%;'></span>", $this->xPosField->Value(), $this->yPosField->Value()) .
+            sprintf("<span class='c-hot-spot-point js-hot-spot-point' style='left: %s%%; top: %s%%;'></span>", $this->xPosField->getValue(), $this->yPosField->getValue()) .
             "</div>" .
             "</div>";
     }
