@@ -82,8 +82,8 @@ class PointField extends FormField
      */
     public function Value(): string
     {
-        $xPos = $this->xPosField->Value();
-        $yPos = $this->yPosField->Value();
+        $xPos = $this->xPosField->getValue();
+        $yPos = $this->yPosField->getValue();
 
         return sprintf('%s,%s', $xPos, $yPos);
     }
